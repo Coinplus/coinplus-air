@@ -1,11 +1,11 @@
-import { useState } from 'react';
-import type { NextPage } from 'next';
-import { useRouter } from 'next/router';
-import Head from 'next/head';
-import Image from 'next/image';
+import { useState } from "react";
+import type { NextPage } from "next";
+import { useRouter } from "next/router";
+import Head from "next/head";
+import Image from "next/image";
 
 const Air: NextPage = () => {
-  const [balance, setBalance] = useState('');
+  const [balance, setBalance] = useState("");
 
   const router = useRouter();
 
@@ -61,26 +61,28 @@ const Air: NextPage = () => {
       })
       .then(function (responseJson) {
         console.log(responseJson);
-        if (cl === 'btc') {
+        if (cl === "btc") {
           setBalance((responseJson[address].final_balance * ratio).toFixed(4)); //wei to eth
         }
-        if (cl === 'eth') {
+        if (cl === "eth") {
           setBalance((responseJson.result * ratio).toFixed(4)); //wei to eth
         }
-        if (cl === 'ltc' || cl === 'bch') {
-          setBalance((responseJson.data[address].address.balance * ratio).toFixed(4)); //wei to eth
+        if (cl === "ltc" || cl === "bch") {
+          setBalance(
+            (responseJson.data[address].address.balance * ratio).toFixed(4)
+          ); //wei to eth
         }
-        if (cl === 'xtz') {
+        if (cl === "xtz") {
           console.log(responseJson);
-          if (responseJson.type == 'empty') {
-            setBalance('0');
+          if (responseJson.type == "empty") {
+            setBalance("0");
           } else {
             setBalance((responseJson.balance * ratio).toFixed(4)); //wei to eth
           }
         }
       })
       .catch(function (e) {
-        setBalance('Not Available');
+        setBalance("Not Available");
       });
   };
 
@@ -95,15 +97,20 @@ const Air: NextPage = () => {
       </Head>
 
       <main className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center">
-        <section>
+        <section className="flex flex-col">
           <h1 id="title" className="title">
             {cl}
           </h1>
           <Image id="qrcode" className="qrcode" src="" alt="" />
-          <span id="address" className="address">
+          <span id="address" className="address text-[#d81e5b]">
             {address}
           </span>
-          <button onClick={addressToClipboard}>COPY ADDRESS</button>
+          <button
+            onClick={addressToClipboard}
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+          >
+            COPY ADDRESS
+          </button>
         </section>
 
         <section className="balance">
@@ -114,12 +121,24 @@ const Air: NextPage = () => {
             <span id="balance_unconfirmed"></span>
             <span className="balance-token" id="token"></span>
           </div>
-          <a href={currencyResources[cl]?.history} id="balance_history" className="balance-history" target="_blank">
-            History of transactions
-          </a>
-          <a href="#" id="balance_tokens" className="balance-tokens" target="_blank">
-            View my tokens
-          </a>
+          <div className="flex flex-col">
+            <a
+              href={currencyResources[cl]?.history}
+              id="balance_history"
+              className="balance-history underline text-sky-700 hover:text-purple-700"
+              target="_blank"
+            >
+              History of transactions
+            </a>
+            <a
+              href="#"
+              id="balance_tokens"
+              className="balance-tokens underline text-sky-700 hover:text-purple-700"
+              target="_blank"
+            >
+              View my tokens
+            </a>
+          </div>
         </section>
       </main>
 
@@ -130,7 +149,13 @@ const Air: NextPage = () => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Powered by <Image src="/img/logo.png" alt="Coinplus Logo" width={16.658227848} height={16} />
+          Powered by{" "}
+          <Image
+            src="/img/logo.png"
+            alt="Coinplus Logo"
+            width={16.658227848}
+            height={16}
+          />
         </a>
       </footer>
     </div>
