@@ -100,7 +100,7 @@ const Air: NextPage = () => {
       <main className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center">
         <section className="flex flex-col">
           <QRCodeSVG value={address} className="self-center" />
-          <span id="address" className="address text-[#d81e5b]">
+          <span id="address" className="address text-[#FEA204]">
             {address}
           </span>
           <button
