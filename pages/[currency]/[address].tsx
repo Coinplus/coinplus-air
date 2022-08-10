@@ -3,6 +3,7 @@ import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import Image from "next/image";
+import { QRCodeSVG } from "qrcode.react";
 
 const Air: NextPage = () => {
   const [balance, setBalance] = useState("");
@@ -98,10 +99,7 @@ const Air: NextPage = () => {
 
       <main className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center">
         <section className="flex flex-col">
-          <h1 id="title" className="title">
-            {cl}
-          </h1>
-          <Image id="qrcode" className="qrcode" src="" alt="" />
+          <QRCodeSVG value={address} className="self-center" />
           <span id="address" className="address text-[#d81e5b]">
             {address}
           </span>
@@ -116,7 +114,7 @@ const Air: NextPage = () => {
         <section className="balance">
           <div>
             <span id="balance_total" className="balance-total">
-              {balance}
+              {`${balance} ${cl}`}
             </span>
             <span id="balance_unconfirmed"></span>
             <span className="balance-token" id="token"></span>
