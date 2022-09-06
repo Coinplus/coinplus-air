@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import Head from "next/head";
@@ -7,6 +7,8 @@ import { QRCodeSVG } from "qrcode.react";
 
 const Air: NextPage = () => {
   const [balance, setBalance] = useState("");
+  const [history, setHistory] = useState<Response>();
+  const [transList, setTransList] = useState("");
 
   const router = useRouter();
 
@@ -30,7 +32,9 @@ const Air: NextPage = () => {
     },
     btc: {
       balance: `https://blockchain.info/balance?active=${address}&cors=true`,
-      history: `https://www.blockchain.com/btc/address/${address}?sort=0`,
+      // history: `https://chain.api.btc.com/v3/address/${address}/tx`,
+      history: `/api/history?address=${address}`,
+      transaction: `/api/transaction?hash=`,
       ratio: 0.00000001,
     },
     bch: {
@@ -49,6 +53,7 @@ const Air: NextPage = () => {
       ratio: 0.000001,
     },
   };
+
   const cl = currency?.toLowerCase() as keyof typeof currencyResources;
 
   const getBalance = () => {
@@ -61,7 +66,7 @@ const Air: NextPage = () => {
         return response.json();
       })
       .then(function (responseJson) {
-        console.log(responseJson);
+        // console.log(responseJson);
         if (cl === "btc") {
           setBalance((responseJson[address].final_balance * ratio).toFixed(4)); //wei to eth
         }
@@ -74,7 +79,7 @@ const Air: NextPage = () => {
           ); //wei to eth
         }
         if (cl === "xtz") {
-          console.log(responseJson);
+          // console.log(responseJson);
           if (responseJson.type == "empty") {
             setBalance("0");
           } else {
@@ -86,8 +91,21 @@ const Air: NextPage = () => {
         setBalance("Not Available");
       });
   };
+  const getHistory = async () => {
+    const { history } =
+      currencyResources[cl as keyof typeof currencyResources] ||
+      ({} as typeof currencyResources[keyof typeof currencyResources]);
+    // console.log("history -", await history);
+    // console.log("cl -", cl);
+    const res = cl && (await fetch(history));
+    setHistory(await res.json());
+    // console.log(history);
+  };
 
-  getBalance();
+  useEffect(() => {
+    !balance && cl && getBalance();
+    address && getHistory();
+  }, [cl, address]);
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center py-2">
@@ -120,6 +138,47 @@ const Air: NextPage = () => {
             <span className="balance-token" id="token"></span>
           </div>
           <div className="flex flex-col">
+            {/* <div>
+              {history?.txs?.map((item) => {
+                return (
+                  <div key={item.hash}>
+                    <div>{`hash   ${item.hash}   ${new Date(
+                      item.time * 1000
+                    )}`}</div>
+                    <div className="my-4 border flex flex-row justify-between	">
+                      <div className="flex flex-col">
+                        {item.inputs.map((i) => {
+                          return (
+                            <span
+                              className={`bg-lime-600 ${
+                                address == i.prev_out.addr && "text-sky-700"
+                              }`}
+                            >
+                              {`${i.prev_out.addr} ${
+                                i.prev_out.value * currencyResources[cl]?.ratio
+                              } ${cl}`}
+                            </span>
+                          );
+                        })}
+                      </div>
+                      <div className="flex flex-col">
+                        {item.out.map((i) => {
+                          return (
+                            <span
+                              className={`bg-red-500  ${
+                                address == i.addr && "text-sky-700"
+                              }`}
+                            >{`${i.addr} ${
+                              i.value * currencyResources[cl]?.ratio
+                            } ${cl}`}</span>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div> */}
             <a
               href={currencyResources[cl]?.history}
               id="balance_history"
