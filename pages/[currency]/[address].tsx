@@ -59,7 +59,7 @@ const Air: NextPage = () => {
   const getBalance = () => {
     const { balance, ratio } =
       currencyResources[cl as keyof typeof currencyResources] ||
-      ({} as typeof currencyResources[keyof typeof currencyResources]);
+      ({} as (typeof currencyResources)[keyof typeof currencyResources]);
 
     fetch(balance)
       .then(function (response) {
@@ -94,7 +94,7 @@ const Air: NextPage = () => {
   const getHistory = async () => {
     const { history } =
       currencyResources[cl as keyof typeof currencyResources] ||
-      ({} as typeof currencyResources[keyof typeof currencyResources]);
+      ({} as (typeof currencyResources)[keyof typeof currencyResources]);
     // console.log("history -", await history);
     // console.log("cl -", cl);
     const res = cl && (await fetch(history));
@@ -108,25 +108,84 @@ const Air: NextPage = () => {
   }, [cl, address]);
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center py-2">
+    <div className="flex max-w-86 min-h-screen flex-col items-center justify-center py-2 px-4">
       <Head>
         <title>Air - Coinplus</title>
         <meta name="description" content="" />
         <link rel="icon" href="/favicon.png" />
       </Head>
 
-      <main className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center">
-        <section className="flex flex-col">
-          <QRCodeSVG value={address} className="self-center" />
-          <span id="address" className="address text-[#FEA204]">
-            {address}
-          </span>
-          <button
-            onClick={addressToClipboard}
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-          >
-            COPY ADDRESS
-          </button>
+      <main className="flex sm:w-86 lg:w-86 w-86 flex-1 flex-col items-center justify-center text-center">
+        <Image
+          src="/img/logo.svg"
+          alt="Coinplus Logo"
+          width={118}
+          height={46}
+        />
+        <section className="flex justify-between">
+          <div className="w-1/2 font-bold text-3xl text-left align-text-bottom my-auto border-b-4 rounded border-[#FB6D40]">
+            Coinplus QuickCheck
+          </div>
+          <div className="">
+            <Image
+              src="/img/card.svg"
+              alt="Coinplus Card"
+              width={138}
+              height={128}
+            />
+          </div>
+        </section>
+        <section className="text-left flex w-full">
+          <div className="flex-col pr-6">
+            <div className="flex">
+              <div className="flex text-sm mr-1 font-bold">Condition</div>
+              <Image src="/img/info.svg" alt="info" width={20} height={20} />
+            </div>
+            <div className="flex h-7 w-20 bg-slate-100 rounded-lg justify-between py-1 px-1">
+              <div>New</div>
+              <Image src="/img/new.svg" alt="info" width={11} height={11} />
+            </div>
+          </div>
+          <div className="flex-col pr-6">
+            <div className="flex text-sm font-bold">Type</div>
+            <div className="px-1 py-1 bg-slate-100 rounded-lg">Card</div>
+          </div>
+          <div className="flex-col pr-6">
+            <div className="flex text-sm font-bold">Color</div>
+            <div className="px-1 py-1 bg-slate-100 rounded-lg">Orange</div>
+          </div>
+        </section>
+        <section className="text-left flex w-full my-2">
+          <div className="flex-col pr-6">
+            <div className="flex text-sm font-bold">Balance</div>
+            <div className="px-1 py-1 bg-slate-100 font-normal rounded-lg">
+              BTC 0.0000002
+            </div>
+          </div>
+        </section>
+        <section className="flex flex-col w-full my-2">
+          <div className="px-4 py-4 bg-slate-100 h-68 rounded-xl flex-col justify-items-center">
+            <QRCodeSVG
+              value={address}
+              className="flex self-center mx-auto w-44 h-44"
+            />
+            <button
+              onClick={addressToClipboard}
+              className="bg-white hover:bg-slate-200 text-black font-bold py-2 px-4 h-14 w-full rounded-lg mt-4"
+            >
+              <div className="flex">
+                <Image src="/img/copy.svg" alt="info" width={24} height={24} />
+                <div className="flex flex-col mx-2">
+                  <div className="text-left text-base font-semibold">
+                    Your address
+                  </div>
+                  <span id="address" className="address text-sm text-[#4F6486]">
+                    {address}
+                  </span>
+                </div>
+              </div>
+            </button>
+          </div>
         </section>
 
         <section className="balance">
