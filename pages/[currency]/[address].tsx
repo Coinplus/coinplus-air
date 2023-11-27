@@ -115,7 +115,19 @@ const Air: NextPage = () => {
         <link rel="icon" href="/favicon.png" />
       </Head>
 
-      <Image src="/img/logo.svg" alt="Coinplus Logo" width={118} height={46} />
+      <a
+        className="flex items-center justify-center"
+        href="https://coinplus.com"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <Image
+          src="/img/logo.svg"
+          alt="Coinplus Logo"
+          width={118}
+          height={46}
+        />
+      </a>
       <main className="flex sm:w-86 lg:w-86 w-86 flex-1 flex-col items-center justify-center text-center mb-1 sm:overflow-y-auto overflow-y-auto">
         <section className="flex justify-between">
           <div className="w-1/2 font-bold text-3xl text-left align-text-bottom my-auto border-b-4 rounded border-[#FB6D40]">
@@ -154,7 +166,7 @@ const Air: NextPage = () => {
           <div className="flex-col pr-6">
             <div className="flex text-sm font-bold">Balance</div>
             <div className="px-1 py-1 bg-slate-100 font-normal rounded-lg">
-              BTC 0.0000002
+              {`${balance} ${cl}`}
             </div>
           </div>
         </section>
@@ -166,7 +178,7 @@ const Air: NextPage = () => {
             />
             <button
               onClick={addressToClipboard}
-              className="bg-white hover:bg-slate-200 text-black font-bold py-2 px-4 h-14 w-full rounded-lg mt-4"
+              className="bg-white hover:bg-slate-200 text-black font-bold py-2 px-4 h-14 max-w-72 w-72 rounded-lg mt-4 text-ellipsis overflow-hidden"
             >
               <div className="flex">
                 <Image src="/img/copy.svg" alt="info" width={24} height={24} />
@@ -174,7 +186,10 @@ const Air: NextPage = () => {
                   <div className="text-left text-base font-semibold">
                     Your address
                   </div>
-                  <span id="address" className="address text-sm text-[#4F6486]">
+                  <span
+                    id="address"
+                    className="max-w-40 w-40 text-ellipsis text-left overflow-hidden address text-sm text-[#4F6486]"
+                  >
                     {address}
                   </span>
                 </div>
@@ -368,7 +383,7 @@ const Air: NextPage = () => {
         </section>
       </main>
 
-      <footer className="flex h-24 w-full items-center justify-center border-t">
+      {/* <footer className="flex h-24 w-full items-center justify-center border-t">
         <a
           className="flex items-center justify-center gap-2"
           href="https://coinplus.com"
@@ -383,7 +398,7 @@ const Air: NextPage = () => {
             height={16}
           />
         </a>
-      </footer>
+      </footer> */}
     </div>
   );
 };
