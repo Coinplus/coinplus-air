@@ -108,7 +108,7 @@ const Air: NextPage = () => {
   }, [cl, address]);
 
   return (
-    <div className="flex max-w-86 min-h-screen h-full flex-col items-center justify-center py-2 px-4">
+    <div className="flex max-w-86 min-h-screen h-full flex-col items-center justify-center py-2 px-4 sm:overflow-y-auto overflow-y-auto">
       <Head>
         <title>Air - Coinplus</title>
         <meta name="description" content="" />
@@ -128,7 +128,7 @@ const Air: NextPage = () => {
           height={46}
         />
       </a>
-      <main className="flex sm:w-86 lg:w-86 w-86 flex-1 flex-col items-center justify-center text-center mb-1 sm:overflow-y-auto overflow-y-auto">
+      <main className="flex sm:w-86 lg:w-86 w-86 flex-1 flex-col items-center justify-center text-center mb-1">
         <section className="flex justify-between">
           <div className="w-1/2 font-bold text-3xl text-left align-text-bottom my-auto border-b-4 rounded border-[#FB6D40]">
             Coinplus QuickCheck
