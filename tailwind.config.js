@@ -10,6 +10,7 @@ module.exports = {
         blueGray: "#F7F7FA",
       },
       width: {
+        17: "4.25rem",
         86: "21.5rem",
       },
       height: {

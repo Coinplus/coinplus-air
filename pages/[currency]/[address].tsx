@@ -140,6 +140,12 @@ const Air: NextPage = () => {
               width={138}
               height={128}
             />
+            {/* <Image
+              src="/img/bar.svg"
+              alt="Coinplus Bar"
+              width={138}
+              height={128}
+            /> */}
           </div>
         </section>
         <section className="text-left flex w-full">
@@ -151,15 +157,19 @@ const Air: NextPage = () => {
             <div className="flex w-16 bg-slate-100 rounded-lg justify-between py-1 px-2">
               <div>New</div>
               <Image src="/img/new.svg" alt="info" width={10} height={10} />
+              {/* <div>Used</div>
+              <Image src="/img/used.svg" alt="info" width={10} height={10} /> */}
             </div>
           </div>
           <div className="flex-col pr-6">
             <div className="flex text-sm font-bold">Type</div>
             <div className="px-1 py-1 bg-slate-100 rounded-lg">Card</div>
+            {/* <div className="px-1 py-1 bg-slate-100 rounded-lg">Bar</div> */}
           </div>
           <div className="flex-col pr-6">
             <div className="flex text-sm font-bold">Color</div>
             <div className="px-1 py-1 bg-slate-100 rounded-lg">Orange</div>
+            {/* <div className="px-1 py-1 bg-slate-100 rounded-lg">Silver</div> */}
           </div>
         </section>
         <section className="text-left flex w-full my-2">
