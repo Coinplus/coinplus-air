@@ -108,20 +108,15 @@ const Air: NextPage = () => {
   }, [cl, address]);
 
   return (
-    <div className="flex max-w-86 min-h-screen flex-col items-center justify-center py-2 px-4">
+    <div className="flex max-w-86 min-h-screen h-full flex-col items-center justify-center py-2 px-4">
       <Head>
         <title>Air - Coinplus</title>
         <meta name="description" content="" />
         <link rel="icon" href="/favicon.png" />
       </Head>
 
-      <main className="flex sm:w-86 lg:w-86 w-86 flex-1 flex-col items-center justify-center text-center">
-        <Image
-          src="/img/logo.svg"
-          alt="Coinplus Logo"
-          width={118}
-          height={46}
-        />
+      <Image src="/img/logo.svg" alt="Coinplus Logo" width={118} height={46} />
+      <main className="flex sm:w-86 lg:w-86 w-86 flex-1 flex-col items-center justify-center text-center mb-1 sm:overflow-y-auto overflow-y-auto">
         <section className="flex justify-between">
           <div className="w-1/2 font-bold text-3xl text-left align-text-bottom my-auto border-b-4 rounded border-[#FB6D40]">
             Coinplus QuickCheck
@@ -141,9 +136,9 @@ const Air: NextPage = () => {
               <div className="flex text-sm mr-1 font-bold">Condition</div>
               <Image src="/img/info.svg" alt="info" width={20} height={20} />
             </div>
-            <div className="flex h-7 w-20 bg-slate-100 rounded-lg justify-between py-1 px-1">
+            <div className="flex w-16 bg-slate-100 rounded-lg justify-between py-1 px-2">
               <div>New</div>
-              <Image src="/img/new.svg" alt="info" width={11} height={11} />
+              <Image src="/img/new.svg" alt="info" width={10} height={10} />
             </div>
           </div>
           <div className="flex-col pr-6">
@@ -188,16 +183,131 @@ const Air: NextPage = () => {
           </div>
         </section>
 
-        <section className="balance">
-          <div>
+        <section className="history h-14 w-full">
+          <button
+            onClick={addressToClipboard}
+            className="bg-blueGray hover:bg-slate-200 text-black font-bold py-1 px-4 h-14 w-full rounded-lg mt-4"
+          >
+            <div className="flex justify-between">
+              <Image
+                src="/img/history.svg"
+                alt="History"
+                width={24}
+                height={24}
+              />
+              <div className="flex flex-col mx-2">
+                <div className="text-left text-base font-medium">History</div>
+                <span
+                  id="address"
+                  className="address font-normal text-sm text-[#4F6486]"
+                >
+                  Check the list of your transactions
+                </span>
+              </div>
+              <Image
+                src="/img/arrowright.svg"
+                alt="Open history"
+                width={24}
+                height={24}
+              />
+            </div>
+          </button>
+          <section className="flex flex-col my-7">
+            <div className="font-bold text-sm text-left mb-3">
+              Download Coinplus app
+            </div>
+            <div className="flex w-56 justify-between">
+              <a
+                className="flex items-center justify-center"
+                href="https://coinplus.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Image
+                  src="/img/appstore.svg"
+                  alt="App Store"
+                  width={100}
+                  height={28.9}
+                />
+              </a>
+              <a
+                className="flex items-center justify-center"
+                href="https://coinplus.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Image
+                  src="/img/googleplay.svg"
+                  alt="Google Play"
+                  width={100}
+                  height={28.9}
+                />
+              </a>
+            </div>
+          </section>
+          <section className="flex flex-col mt-7 mb-2">
+            <div className="font-bold text-sm text-left mb-3">
+              Join community
+            </div>
+            <div className="flex w-52 justify-between">
+              <a
+                className="flex items-center bg-blueGray hover:bg-slate-200 justify-center w-8 h-8 rounded-full"
+                href="https://coinplus.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Image src="/img/x.svg" alt="twitter" width={17} height={17} />
+              </a>
+              <a
+                className="flex items-center bg-blueGray hover:bg-slate-200 justify-center w-8 h-8 rounded-full"
+                href="https://coinplus.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Image
+                  src="/img/dc.svg"
+                  alt="Google Play"
+                  width={17}
+                  height={17}
+                />
+              </a>
+              <a
+                className="flex items-center bg-blueGray hover:bg-slate-200 justify-center w-8 h-8 rounded-full"
+                href="https://coinplus.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Image
+                  src="/img/reddit.svg"
+                  alt="App Store"
+                  width={17}
+                  height={17}
+                />
+              </a>
+              <a
+                className="flex items-center bg-blueGray hover:bg-slate-200 justify-center w-8 h-8 rounded-full"
+                href="https://coinplus.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Image
+                  src="/img/greenstar.svg"
+                  alt="Google Play"
+                  width={17}
+                  height={17}
+                />
+              </a>
+            </div>
+          </section>
+          {/* <div>
             <span id="balance_total" className="balance-total">
               {`${balance} ${cl}`}
             </span>
             <span id="balance_unconfirmed"></span>
             <span className="balance-token" id="token"></span>
           </div>
-          <div className="flex flex-col">
-            {/* <div>
+          <div className="flex flex-col"> */}
+          {/* <div>
               {history?.txs?.map((item) => {
                 return (
                   <div key={item.hash}>
@@ -238,7 +348,7 @@ const Air: NextPage = () => {
                 );
               })}
             </div> */}
-            <a
+          {/* <a
               href={currencyResources[cl]?.history}
               id="balance_history"
               className="balance-history underline text-sky-700 hover:text-purple-700"
@@ -254,7 +364,7 @@ const Air: NextPage = () => {
             >
               View my tokens
             </a>
-          </div>
+          </div> */}
         </section>
       </main>
 

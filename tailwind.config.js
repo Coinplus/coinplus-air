@@ -6,6 +6,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      colors: {
+        blueGray: "#F7F7FA",
+      },
       width: {
         86: "21.5rem",
       },
