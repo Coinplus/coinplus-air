@@ -1,0 +1,13 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "CU3K4PRR82.com.coinplus.app",
+        "paths": [
+          "/btc/*"
+        ]
+      }
+    ]
+  }
+}

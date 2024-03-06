@@ -1,14 +1,16 @@
-import { useEffect, useState } from "react";
-import type { NextPage } from "next";
-import { useRouter } from "next/router";
-import Head from "next/head";
-import Image from "next/image";
-import { QRCodeSVG } from "qrcode.react";
+'use client';
+
+import { useEffect, useState } from 'react';
+import type { NextPage } from 'next';
+import { useRouter } from 'next/router';
+import Head from 'next/head';
+import Image from 'next/image';
+import { QRCodeSVG } from 'qrcode.react';
 
 const Air: NextPage = () => {
-  const [balance, setBalance] = useState("");
+  const [balance, setBalance] = useState('');
   const [history, setHistory] = useState<Response>();
-  const [transList, setTransList] = useState("");
+  const [transList, setTransList] = useState('');
 
   const router = useRouter();
 
@@ -20,7 +22,7 @@ const Air: NextPage = () => {
   const { currency, address } = router.query as RouterParams;
 
   const addressToClipboard = () => {
-    navigator.clipboard.writeText(address as string);
+    navigator.clipboard.writeText(address);
   };
 
   const currencyResources = {
@@ -67,28 +69,26 @@ const Air: NextPage = () => {
       })
       .then(function (responseJson) {
         // console.log(responseJson);
-        if (cl === "btc") {
+        if (cl === 'btc') {
           setBalance((responseJson[address].final_balance * ratio).toFixed(4)); //wei to eth
         }
-        if (cl === "eth") {
+        if (cl === 'eth') {
           setBalance((responseJson.result * ratio).toFixed(4)); //wei to eth
         }
-        if (cl === "ltc" || cl === "bch") {
-          setBalance(
-            (responseJson.data[address].address.balance * ratio).toFixed(4)
-          ); //wei to eth
+        if (cl === 'ltc' || cl === 'bch') {
+          setBalance((responseJson.data[address].address.balance * ratio).toFixed(4)); //wei to eth
         }
-        if (cl === "xtz") {
+        if (cl === 'xtz') {
           // console.log(responseJson);
-          if (responseJson.type == "empty") {
-            setBalance("0");
+          if (responseJson.type == 'empty') {
+            setBalance('0');
           } else {
             setBalance((responseJson.balance * ratio).toFixed(4)); //wei to eth
           }
         }
       })
       .catch(function (e) {
-        setBalance("Not Available");
+        setBalance('Not Available');
       });
   };
   const getHistory = async () => {
@@ -99,7 +99,7 @@ const Air: NextPage = () => {
     // console.log("cl -", cl);
     const res = cl && (await fetch(history));
     setHistory(await res.json());
-    // console.log(history);
+    console.log(history);
   };
 
   useEffect(() => {
@@ -119,14 +119,8 @@ const Air: NextPage = () => {
         className="flex items-center justify-center"
         href="https://coinplus.com"
         target="_blank"
-        rel="noopener noreferrer"
-      >
-        <Image
-          src="/img/logo.svg"
-          alt="Coinplus Logo"
-          width={118}
-          height={46}
-        />
+        rel="noopener noreferrer">
+        <Image src="/img/logo.svg" alt="Coinplus Logo" width={118} height={46} />
       </a>
       <main className="flex sm:w-86 lg:w-86 w-86 flex-1 flex-col items-center justify-center text-center mb-1">
         <section className="flex justify-between">
@@ -134,12 +128,7 @@ const Air: NextPage = () => {
             Coinplus QuickCheck
           </div>
           <div className="">
-            <Image
-              src="/img/card.svg"
-              alt="Coinplus Card"
-              width={138}
-              height={128}
-            />
+            <Image src="/img/card.svg" alt="Coinplus Card" width={138} height={128} />
             {/* <Image
               src="/img/bar.svg"
               alt="Coinplus Bar"
@@ -175,31 +164,22 @@ const Air: NextPage = () => {
         <section className="text-left flex w-full my-2">
           <div className="flex-col pr-6">
             <div className="flex text-sm font-bold">Balance</div>
-            <div className="px-1 py-1 bg-slate-100 font-normal rounded-lg">
-              {`${balance} ${cl}`}
-            </div>
+            <div className="px-1 py-1 bg-slate-100 font-normal rounded-lg">{`${balance} ${cl}`}</div>
           </div>
         </section>
         <section className="flex flex-col w-full my-2">
           <div className="px-4 py-4 bg-slate-100 h-68 rounded-xl flex-col justify-items-center">
-            <QRCodeSVG
-              value={address}
-              className="flex self-center mx-auto w-44 h-44"
-            />
+            <QRCodeSVG value={address} className="flex self-center mx-auto w-44 h-44" />
             <button
               onClick={addressToClipboard}
-              className="bg-white hover:bg-slate-200 text-black font-bold py-2 px-4 h-14 max-w-72 w-72 rounded-lg mt-4 text-ellipsis overflow-hidden"
-            >
+              className="bg-white hover:bg-slate-200 text-black font-bold py-2 px-4 h-14 max-w-72 w-72 rounded-lg mt-4 text-ellipsis overflow-hidden">
               <div className="flex">
                 <Image src="/img/copy.svg" alt="info" width={24} height={24} />
                 <div className="flex flex-col mx-2">
-                  <div className="text-left text-base font-semibold">
-                    Your address
-                  </div>
+                  <div className="text-left text-base font-semibold">Your address</div>
                   <span
                     id="address"
-                    className="max-w-40 w-40 text-ellipsis text-left overflow-hidden address text-sm text-[#4F6486]"
-                  >
+                    className="max-w-40 w-40 text-ellipsis text-left overflow-hidden address text-sm text-[#4F6486]">
                     {address}
                   </span>
                 </div>
@@ -209,118 +189,69 @@ const Air: NextPage = () => {
         </section>
 
         <section className="history h-14 w-full">
-          <button
+          {/* <button
             onClick={addressToClipboard}
-            className="bg-blueGray hover:bg-slate-200 text-black font-bold py-1 px-4 h-14 w-full rounded-lg mt-4"
-          >
+            className="bg-blueGray hover:bg-slate-200 text-black font-bold py-1 px-4 h-14 w-full rounded-lg mt-4">
             <div className="flex justify-between">
-              <Image
-                src="/img/history.svg"
-                alt="History"
-                width={24}
-                height={24}
-              />
+              <Image src="/img/history.svg" alt="History" width={24} height={24} />
               <div className="flex flex-col mx-2">
                 <div className="text-left text-base font-medium">History</div>
-                <span
-                  id="address"
-                  className="address font-normal text-sm text-[#4F6486]"
-                >
+                <span id="address" className="address font-normal text-sm text-[#4F6486]">
                   Check the list of your transactions
                 </span>
               </div>
-              <Image
-                src="/img/arrowright.svg"
-                alt="Open history"
-                width={24}
-                height={24}
-              />
+              <Image src="/img/arrowright.svg" alt="Open history" width={24} height={24} />
             </div>
-          </button>
+          </button> */}
           <section className="flex flex-col my-7">
-            <div className="font-bold text-sm text-left mb-3">
-              Download Coinplus app
-            </div>
+            <div className="font-bold text-sm text-left mb-3">Download Coinplus app</div>
             <div className="flex w-56 justify-between">
               <a
                 className="flex items-center justify-center"
                 href="https://coinplus.com"
                 target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Image
-                  src="/img/appstore.svg"
-                  alt="App Store"
-                  width={100}
-                  height={28.9}
-                />
+                rel="noopener noreferrer">
+                <Image src="/img/appstore.svg" alt="App Store" width={100} height={28.9} />
               </a>
               <a
                 className="flex items-center justify-center"
                 href="https://coinplus.com"
                 target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Image
-                  src="/img/googleplay.svg"
-                  alt="Google Play"
-                  width={100}
-                  height={28.9}
-                />
+                rel="noopener noreferrer">
+                <Image src="/img/googleplay.svg" alt="Google Play" width={100} height={28.9} />
               </a>
             </div>
           </section>
           <section className="flex flex-col mt-7 mb-2">
-            <div className="font-bold text-sm text-left mb-3">
-              Join community
-            </div>
+            <div className="font-bold text-sm text-left mb-3">Join community</div>
             <div className="flex w-52 justify-between">
               <a
                 className="flex items-center bg-blueGray hover:bg-slate-200 justify-center w-8 h-8 rounded-full"
                 href="https://coinplus.com"
                 target="_blank"
-                rel="noopener noreferrer"
-              >
+                rel="noopener noreferrer">
                 <Image src="/img/x.svg" alt="twitter" width={17} height={17} />
               </a>
               <a
                 className="flex items-center bg-blueGray hover:bg-slate-200 justify-center w-8 h-8 rounded-full"
                 href="https://coinplus.com"
                 target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Image
-                  src="/img/dc.svg"
-                  alt="Google Play"
-                  width={17}
-                  height={17}
-                />
+                rel="noopener noreferrer">
+                <Image src="/img/dc.svg" alt="Google Play" width={17} height={17} />
               </a>
               <a
                 className="flex items-center bg-blueGray hover:bg-slate-200 justify-center w-8 h-8 rounded-full"
                 href="https://coinplus.com"
                 target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Image
-                  src="/img/reddit.svg"
-                  alt="App Store"
-                  width={17}
-                  height={17}
-                />
+                rel="noopener noreferrer">
+                <Image src="/img/reddit.svg" alt="App Store" width={17} height={17} />
               </a>
               <a
                 className="flex items-center bg-blueGray hover:bg-slate-200 justify-center w-8 h-8 rounded-full"
                 href="https://coinplus.com"
                 target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Image
-                  src="/img/greenstar.svg"
-                  alt="Google Play"
-                  width={17}
-                  height={17}
-                />
+                rel="noopener noreferrer">
+                <Image src="/img/greenstar.svg" alt="Google Play" width={17} height={17} />
               </a>
             </div>
           </section>
