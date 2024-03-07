@@ -141,7 +141,7 @@ const Air: NextPage = () => {
           <div className="flex-col pr-6">
             <div className="flex">
               <div className="flex text-sm mr-1 font-bold">Condition</div>
-              <Image src="/img/info.svg" alt="info" width={20} height={20} />
+              {/* <Image src="/img/info.svg" alt="info" width={20} height={20} /> */}
             </div>
             <div className="flex w-16 bg-slate-100 rounded-lg justify-between py-1 px-2">
               <div>New</div>
@@ -150,23 +150,25 @@ const Air: NextPage = () => {
               <Image src="/img/used.svg" alt="info" width={10} height={10} /> */}
             </div>
           </div>
-          <div className="flex-col pr-6">
+          {/* <div className="flex-col pr-6">
             <div className="flex text-sm font-bold">Type</div>
             <div className="px-1 py-1 bg-slate-100 rounded-lg">Card</div>
-            {/* <div className="px-1 py-1 bg-slate-100 rounded-lg">Bar</div> */}
           </div>
           <div className="flex-col pr-6">
             <div className="flex text-sm font-bold">Color</div>
             <div className="px-1 py-1 bg-slate-100 rounded-lg">Orange</div>
-            {/* <div className="px-1 py-1 bg-slate-100 rounded-lg">Silver</div> */}
-          </div>
-        </section>
-        <section className="text-left flex w-full my-2">
+          </div> */}
           <div className="flex-col pr-6">
             <div className="flex text-sm font-bold">Balance</div>
             <div className="px-1 py-1 bg-slate-100 font-normal rounded-lg">{`${balance} ${cl}`}</div>
           </div>
         </section>
+        {/* <section className="text-left flex w-full my-2">
+          <div className="flex-col pr-6">
+            <div className="flex text-sm font-bold">Balance</div>
+            <div className="px-1 py-1 bg-slate-100 font-normal rounded-lg">{`${balance} ${cl}`}</div>
+          </div>
+        </section> */}
         <section className="flex flex-col w-full my-2">
           <div className="px-4 py-4 bg-slate-100 h-68 rounded-xl flex-col justify-items-center">
             <QRCodeSVG value={address} className="flex self-center mx-auto w-44 h-44" />
@@ -189,8 +191,8 @@ const Air: NextPage = () => {
         </section>
 
         <section className="history h-14 w-full">
-          {/* <button
-            onClick={addressToClipboard}
+          <button
+            onClick={() => window.open('https://apps.apple.com/us/app/coinplus-wallet/id6466606575?uo=2')}
             className="bg-blueGray hover:bg-slate-200 text-black font-bold py-1 px-4 h-14 w-full rounded-lg mt-4">
             <div className="flex justify-between">
               <Image src="/img/history.svg" alt="History" width={24} height={24} />
@@ -202,19 +204,19 @@ const Air: NextPage = () => {
               </div>
               <Image src="/img/arrowright.svg" alt="Open history" width={24} height={24} />
             </div>
-          </button> */}
+          </button>
           <section className="flex flex-col my-7">
             <div className="font-bold text-sm text-left mb-3">Download Coinplus app</div>
             <div className="flex w-56 justify-between">
               <a
                 className="flex items-center justify-center"
-                href="https://coinplus.com"
+                href="https://apps.apple.com/us/app/coinplus-wallet/id6466606575?uo=2"
                 target="_blank"
                 rel="noopener noreferrer">
                 <Image src="/img/appstore.svg" alt="App Store" width={100} height={28.9} />
               </a>
               <a
-                className="flex items-center justify-center"
+                className="pointer-events-none opacity-50 cursor-not-allowed flex items-center justify-center"
                 href="https://coinplus.com"
                 target="_blank"
                 rel="noopener noreferrer">
@@ -255,91 +257,8 @@ const Air: NextPage = () => {
               </a>
             </div>
           </section>
-          {/* <div>
-            <span id="balance_total" className="balance-total">
-              {`${balance} ${cl}`}
-            </span>
-            <span id="balance_unconfirmed"></span>
-            <span className="balance-token" id="token"></span>
-          </div>
-          <div className="flex flex-col"> */}
-          {/* <div>
-              {history?.txs?.map((item) => {
-                return (
-                  <div key={item.hash}>
-                    <div>{`hash   ${item.hash}   ${new Date(
-                      item.time * 1000
-                    )}`}</div>
-                    <div className="my-4 border flex flex-row justify-between	">
-                      <div className="flex flex-col">
-                        {item.inputs.map((i) => {
-                          return (
-                            <span
-                              className={`bg-lime-600 ${
-                                address == i.prev_out.addr && "text-sky-700"
-                              }`}
-                            >
-                              {`${i.prev_out.addr} ${
-                                i.prev_out.value * currencyResources[cl]?.ratio
-                              } ${cl}`}
-                            </span>
-                          );
-                        })}
-                      </div>
-                      <div className="flex flex-col">
-                        {item.out.map((i) => {
-                          return (
-                            <span
-                              className={`bg-red-500  ${
-                                address == i.addr && "text-sky-700"
-                              }`}
-                            >{`${i.addr} ${
-                              i.value * currencyResources[cl]?.ratio
-                            } ${cl}`}</span>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div> */}
-          {/* <a
-              href={currencyResources[cl]?.history}
-              id="balance_history"
-              className="balance-history underline text-sky-700 hover:text-purple-700"
-              target="_blank"
-            >
-              History of transactions
-            </a>
-            <a
-              href="#"
-              id="balance_tokens"
-              className="balance-tokens underline text-sky-700 hover:text-purple-700"
-              target="_blank"
-            >
-              View my tokens
-            </a>
-          </div> */}
         </section>
       </main>
-
-      {/* <footer className="flex h-24 w-full items-center justify-center border-t">
-        <a
-          className="flex items-center justify-center gap-2"
-          href="https://coinplus.com"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{" "}
-          <Image
-            src="/img/logo.png"
-            alt="Coinplus Logo"
-            width={16.658227848}
-            height={16}
-          />
-        </a>
-      </footer> */}
     </div>
   );
 };
