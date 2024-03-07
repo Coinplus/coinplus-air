@@ -23,7 +23,7 @@ const Air: NextPage = () => {
   const { currency, address } = router.query as RouterParams;
 
   const showToast = () => {
-    toast('Copied!', {
+    toast.success('Copied!', {
       position: 'top-right',
       autoClose: 1000,
       hideProgressBar: true,
