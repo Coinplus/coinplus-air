@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Image from 'next/image';
 import { QRCodeSVG } from 'qrcode.react';
+import { ToastContainer, toast } from 'react-toastify';
 
 const Air: NextPage = () => {
   const [balance, setBalance] = useState('');
@@ -21,8 +22,20 @@ const Air: NextPage = () => {
 
   const { currency, address } = router.query as RouterParams;
 
+  const showToast = () => {
+    toast('Copied!', {
+      position: 'top-right',
+      autoClose: 1000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+    });
+  };
+
   const addressToClipboard = () => {
     navigator.clipboard.writeText(address);
+    showToast();
   };
 
   const currencyResources = {
@@ -123,6 +136,7 @@ const Air: NextPage = () => {
         <Image src="/img/logo.svg" alt="Coinplus Logo" width={118} height={46} />
       </a>
       <main className="flex sm:w-86 lg:w-86 w-86 flex-1 flex-col items-center justify-center text-center mb-1">
+        <ToastContainer />
         <section className="flex justify-between">
           <div className="w-1/2 font-bold text-3xl text-left align-text-bottom my-auto border-b-4 rounded border-[#FB6D40]">
             Coinplus QuickCheck
