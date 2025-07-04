@@ -10,8 +10,8 @@ import { ToastContainer, toast } from 'react-toastify';
 
 const Air: NextPage = () => {
   const [balance, setBalance] = useState('');
-  const [history, setHistory] = useState<Response>();
-  const [transList, setTransList] = useState('');
+  // const [history, setHistory] = useState<Response>();
+  // const [transList, setTransList] = useState('');
 
   const router = useRouter();
 
@@ -104,38 +104,41 @@ const Air: NextPage = () => {
         setBalance('Not Available');
       });
   };
-  const getHistory = async () => {
-    const { history } =
-      currencyResources[cl as keyof typeof currencyResources] ||
-      ({} as (typeof currencyResources)[keyof typeof currencyResources]);
-    // console.log("history -", await history);
-    // console.log("cl -", cl);
-    const res = cl && (await fetch(history));
-    setHistory(await res.json());
-    console.log(history);
+  // const getHistory = async () => {
+  //   const { history } =
+  //     currencyResources[cl as keyof typeof currencyResources] ||
+  //     ({} as (typeof currencyResources)[keyof typeof currencyResources]);
+  //   // console.log("history -", await history);
+  //   // console.log("cl -", cl);
+  //   const res = cl && (await fetch(history));
+  //   setHistory(await res.json());
+  //   console.log(history);
+  // };
+
+  const format = (address: string) => {
+    const firstFive = address?.substring(0, 5);
+    const lastFive = address?.substring(address.length - 5);
+
+    return `${firstFive}...${lastFive}`;
   };
 
   useEffect(() => {
     !balance && cl && getBalance();
-    address && getHistory();
+    // address && getHistory();
   }, [cl, address]);
 
   return (
-    <div className="flex max-w-86 min-h-screen h-full flex-col items-center justify-center py-2 px-4 sm:overflow-y-auto overflow-y-auto">
+    <div className="flex max-w-86 min-h-screen h-full flex-col items-center justify-center py-2 sm:overflow-y-auto overflow-y-auto">
       <Head>
         <title>Air - Coinplus</title>
         <meta name="description" content="" />
         <link rel="icon" href="/favicon.png" />
       </Head>
 
-      <a
-        className="flex items-center justify-center"
-        href="https://coinplus.com"
-        target="_blank"
-        rel="noopener noreferrer">
+      <a className="flex items-center justify-center" href="https://coinplus.com" target="_blank">
         <Image src="/img/logo.svg" alt="Coinplus Logo" width={118} height={46} />
       </a>
-      <main className="flex sm:w-86 lg:w-86 w-86 flex-1 flex-col items-center justify-center text-center mb-1">
+      <main className="flex sm:w-86 lg:w-86 w-86 flex-1 flex-col items-center text-center mb-1 pt-5">
         <ToastContainer />
         <section className="flex justify-between">
           <div className="w-1/2 font-bold text-3xl text-left align-text-bottom my-auto border-b-4 rounded border-[#FB6D40]">
@@ -188,15 +191,13 @@ const Air: NextPage = () => {
             <QRCodeSVG value={address} className="flex self-center mx-auto w-44 h-44" />
             <button
               onClick={addressToClipboard}
-              className="bg-white hover:bg-slate-200 text-black font-bold py-2 px-4 h-14 max-w-72 w-72 rounded-lg mt-4 text-ellipsis overflow-hidden">
+              className="bg-white hover:bg-slate-200 text-black font-bold py-2 px-4 h-14 max-w-72 w-72 rounded-lg mt-4">
               <div className="flex">
                 <Image src="/img/copy.svg" alt="info" width={24} height={24} />
                 <div className="flex flex-col mx-2">
                   <div className="text-left text-base font-semibold">Your address</div>
-                  <span
-                    id="address"
-                    className="max-w-40 w-40 text-ellipsis text-left overflow-hidden address text-sm text-[#4F6486]">
-                    {address}
+                  <span id="address" className="max-w-40 w-40 text-left address text-sm text-[#4F6486]">
+                    {format(address)}
                   </span>
                 </div>
               </div>
@@ -205,7 +206,7 @@ const Air: NextPage = () => {
         </section>
 
         <section className="history h-14 w-full">
-          <button
+          {/* <button
             onClick={() => window.open('https://apps.apple.com/us/app/coinplus-wallet/id6466606575?uo=2')}
             className="bg-blueGray hover:bg-slate-200 text-black font-bold py-1 px-4 h-14 w-full rounded-lg mt-4">
             <div className="flex justify-between">
@@ -218,7 +219,7 @@ const Air: NextPage = () => {
               </div>
               <Image src="/img/arrowright.svg" alt="Open history" width={24} height={24} />
             </div>
-          </button>
+          </button> */}
           <section className="flex flex-col my-7">
             <div className="font-bold text-sm text-left mb-3">Download Coinplus app</div>
             <div className="flex w-56 justify-between">
@@ -230,8 +231,8 @@ const Air: NextPage = () => {
                 <Image src="/img/appstore.svg" alt="App Store" width={100} height={28.9} />
               </a>
               <a
-                className="pointer-events-none opacity-50 cursor-not-allowed flex items-center justify-center"
-                href="https://coinplus.com"
+                className="flex items-center justify-center"
+                href="https://play.google.com/store/apps/details?id=com.coinplus.app"
                 target="_blank"
                 rel="noopener noreferrer">
                 <Image src="/img/googleplay.svg" alt="Google Play" width={100} height={28.9} />
@@ -240,35 +241,35 @@ const Air: NextPage = () => {
           </section>
           <section className="flex flex-col mt-7 mb-2">
             <div className="font-bold text-sm text-left mb-3">Join community</div>
-            <div className="flex w-52 justify-between">
+            <div className="flex w-64 justify-left">
               <a
                 className="flex items-center bg-blueGray hover:bg-slate-200 justify-center w-8 h-8 rounded-full"
-                href="https://coinplus.com"
+                href="https://x.com/coinplus"
                 target="_blank"
                 rel="noopener noreferrer">
                 <Image src="/img/x.svg" alt="twitter" width={17} height={17} />
               </a>
               <a
                 className="flex items-center bg-blueGray hover:bg-slate-200 justify-center w-8 h-8 rounded-full"
-                href="https://coinplus.com"
+                href="https://www.facebook.com/coin.plus/"
                 target="_blank"
                 rel="noopener noreferrer">
-                <Image src="/img/dc.svg" alt="Google Play" width={17} height={17} />
+                <Image src="/img/fb.svg" alt="facebook" width={17} height={17} />
               </a>
-              <a
+              {/* <a
                 className="flex items-center bg-blueGray hover:bg-slate-200 justify-center w-8 h-8 rounded-full"
                 href="https://coinplus.com"
                 target="_blank"
                 rel="noopener noreferrer">
                 <Image src="/img/reddit.svg" alt="App Store" width={17} height={17} />
-              </a>
-              <a
+              </a> */}
+              {/* <a
                 className="flex items-center bg-blueGray hover:bg-slate-200 justify-center w-8 h-8 rounded-full"
                 href="https://coinplus.com"
                 target="_blank"
                 rel="noopener noreferrer">
                 <Image src="/img/greenstar.svg" alt="Google Play" width={17} height={17} />
-              </a>
+              </a> */}
             </div>
           </section>
         </section>
