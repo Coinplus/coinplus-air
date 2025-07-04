@@ -130,7 +130,8 @@ const Air: NextPage = () => {
       <Head>
         <title>Air - Coinplus</title>
         <meta name="description" content="Coinplus QuickCheck for your crypto address." />
-        <link rel="icon" href="/favicon.png" />
+        <link rel="icon" href="favicon.png" sizes="192x192" />
+        <link rel="apple-touch-icon" href="favicon-apple.png" />
       </Head>
       <ToastContainer />
 
@@ -144,8 +145,7 @@ const Air: NextPage = () => {
               className="relative w-[100px] h-[39px]">
               <Image src="/img/logo.svg" alt="Coinplus Logo" fill className="object-contain" />
             </a>
-            <span>QuickCheck</span>
-            <div className="w-[100px]" />
+            <span>QuickCheck</span> <div className="w-[100px]" />
           </h1>
         </section>
 
