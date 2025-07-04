@@ -148,13 +148,13 @@ const Air: NextPage = () => {
         {address ? (
           <>
             <section className="grid grid-cols-2 gap-4 text-left mb-6">
-              <div>
+              {/* <div>
                 <div className="text-sm font-semibold text-gray-500">Condition</div>
                 <div className="flex items-center bg-gray-100 rounded-lg py-1 px-3 mt-1 w-fit">
                   <span className="text-gray-800 text-sm">New</span>
                   <Image src="/img/new.svg" alt="new" width={12} height={12} className="ml-2" />
                 </div>
-              </div>
+              </div> */}
               <div>
                 <div className="text-sm font-semibold text-gray-500">Balance</div>
                 <div className="px-3 py-1 bg-gray-100 font-normal rounded-lg mt-1 w-fit min-h-[28px]">
@@ -174,19 +174,18 @@ const Air: NextPage = () => {
               <label htmlFor="address-display" className="block text-left text-sm font-semibold text-gray-500 mb-1">
                 Your address
               </label>
-              <div className="relative flex items-center">
+              <div onClick={addressToClipboard} className="relative flex items-center cursor-pointer group">
                 <input
                   id="address-display"
                   readOnly
                   value={address}
-                  className="w-full bg-gray-100 rounded-lg p-3 pr-12 font-mono text-sm text-gray-700 border-transparent focus:border-orange-500 focus:ring-0"
+                  className="w-full bg-gray-100 rounded-lg p-3 pr-12 font-mono text-sm text-gray-700 border-transparent focus:border-orange-500 focus:ring-0 pointer-events-none"
                 />
-                <button
-                  onClick={addressToClipboard}
-                  className="absolute right-0 h-full px-4 flex items-center justify-center text-gray-500 hover:text-gray-800 transition-colors"
+                <div
+                  className="absolute right-0 h-full px-4 flex items-center justify-center text-gray-500 group-hover:text-gray-800 transition-colors"
                   aria-label="Copy address">
                   <Image src="/img/copy.svg" alt="copy" width={20} height={20} />
-                </button>
+                </div>
               </div>
             </section>
           </>
