@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
@@ -34,8 +34,10 @@ const Air: NextPage = () => {
   };
 
   const addressToClipboard = () => {
-    navigator.clipboard.writeText(address);
-    showToast();
+    if (address) {
+      navigator.clipboard.writeText(address);
+      showToast();
+    }
   };
 
   const currencyResources = {
@@ -71,39 +73,33 @@ const Air: NextPage = () => {
 
   const cl = currency?.toLowerCase() as keyof typeof currencyResources;
 
-  const getBalance = () => {
-    const { balance, ratio } =
-      currencyResources[cl as keyof typeof currencyResources] ||
-      ({} as (typeof currencyResources)[keyof typeof currencyResources]);
+  const getBalance = useCallback(() => {
+    if (!cl || !currencyResources[cl]) return;
 
-    fetch(balance)
-      .then(function (response) {
-        return response.json();
-      })
-      .then(function (responseJson) {
-        // console.log(responseJson);
+    const { balance: balanceUrl, ratio } = currencyResources[cl];
+
+    fetch(balanceUrl)
+      .then((response) => response.json())
+      .then((responseJson) => {
         if (cl === 'btc') {
-          setBalance((responseJson[address].final_balance * ratio).toFixed(4)); //wei to eth
-        }
-        if (cl === 'eth') {
-          setBalance((responseJson.result * ratio).toFixed(4)); //wei to eth
-        }
-        if (cl === 'ltc' || cl === 'bch') {
-          setBalance((responseJson.data[address].address.balance * ratio).toFixed(4)); //wei to eth
-        }
-        if (cl === 'xtz') {
-          // console.log(responseJson);
-          if (responseJson.type == 'empty') {
-            setBalance('0');
+          setBalance((responseJson[address].final_balance * ratio).toFixed(4));
+        } else if (cl === 'eth') {
+          setBalance((responseJson.result * ratio).toFixed(4));
+        } else if (cl === 'ltc' || cl === 'bch') {
+          setBalance((responseJson.data[address].address.balance * ratio).toFixed(4));
+        } else if (cl === 'xtz') {
+          if (responseJson.type === 'empty') {
+            setBalance('0.0000');
           } else {
-            setBalance((responseJson.balance * ratio).toFixed(4)); //wei to eth
+            setBalance((responseJson.balance * ratio).toFixed(4));
           }
         }
       })
-      .catch(function (e) {
-        setBalance('Not Available');
+      .catch(() => {
+        setBalance('N/A');
       });
-  };
+  }, [address, cl]);
+
   // const getHistory = async () => {
   //   const { history } =
   //     currencyResources[cl as keyof typeof currencyResources] ||
@@ -123,157 +119,138 @@ const Air: NextPage = () => {
   };
 
   useEffect(() => {
-    !balance && cl && getBalance();
+    if (address && !balance) {
+      getBalance();
+    }
     // address && getHistory();
-  }, [cl, address]);
+  }, [address, balance, getBalance]);
 
   return (
-    <div className="flex max-w-86 min-h-screen h-full flex-col items-center justify-center py-2 sm:overflow-y-auto overflow-y-auto">
+    <div className="bg-gray-50 min-h-screen flex flex-col items-center justify-center p-4 selection:bg-[#FB6D40] selection:text-white">
       <Head>
         <title>Air - Coinplus</title>
-        <meta name="description" content="" />
+        <meta name="description" content="Coinplus QuickCheck for your crypto address." />
         <link rel="icon" href="/favicon.png" />
       </Head>
+      <ToastContainer />
 
-      <a className="flex items-center justify-center" href="https://coinplus.com" target="_blank">
-        <Image src="/img/logo.svg" alt="Coinplus Logo" width={118} height={46} />
-      </a>
-      <main className="flex sm:w-86 lg:w-86 w-86 flex-1 flex-col items-center text-center mb-1 pt-5">
-        <ToastContainer />
-        <section className="flex justify-between">
-          <div className="w-1/2 font-bold text-3xl text-left align-text-bottom my-auto border-b-4 rounded border-[#FB6D40]">
-            Coinplus QuickCheck
-          </div>
-          <div className="">
-            <Image src="/img/card.svg" alt="Coinplus Card" width={138} height={128} />
-            {/* <Image
-              src="/img/bar.svg"
-              alt="Coinplus Bar"
-              width={138}
-              height={128}
-            /> */}
-          </div>
+      <header className="mb-6 text-center">
+        <a href="https://coinplus.com" target="_blank" rel="noopener noreferrer">
+          <Image src="/img/logo.svg" alt="Coinplus Logo" width={118} height={46} />
+        </a>
+      </header>
+
+      <main className="bg-white rounded-2xl shadow-lg p-6 sm:p-8 w-full max-w-md">
+        <section className="text-center border-b pb-4 mb-6">
+          <h1 className="font-bold text-2xl text-gray-800">Coinplus QuickCheck</h1>
         </section>
-        <section className="text-left flex w-full">
-          <div className="flex-col pr-6">
-            <div className="flex">
-              <div className="flex text-sm mr-1 font-bold">Condition</div>
-              {/* <Image src="/img/info.svg" alt="info" width={20} height={20} /> */}
-            </div>
-            <div className="flex w-16 bg-slate-100 rounded-lg justify-between py-1 px-2">
-              <div>New</div>
-              <Image src="/img/new.svg" alt="info" width={10} height={10} />
-              {/* <div>Used</div>
-              <Image src="/img/used.svg" alt="info" width={10} height={10} /> */}
-            </div>
-          </div>
-          {/* <div className="flex-col pr-6">
-            <div className="flex text-sm font-bold">Type</div>
-            <div className="px-1 py-1 bg-slate-100 rounded-lg">Card</div>
-          </div>
-          <div className="flex-col pr-6">
-            <div className="flex text-sm font-bold">Color</div>
-            <div className="px-1 py-1 bg-slate-100 rounded-lg">Orange</div>
-          </div> */}
-          <div className="flex-col pr-6">
-            <div className="flex text-sm font-bold">Balance</div>
-            <div className="px-1 py-1 bg-slate-100 font-normal rounded-lg">{`${balance} ${cl}`}</div>
-          </div>
-        </section>
-        {/* <section className="text-left flex w-full my-2">
-          <div className="flex-col pr-6">
-            <div className="flex text-sm font-bold">Balance</div>
-            <div className="px-1 py-1 bg-slate-100 font-normal rounded-lg">{`${balance} ${cl}`}</div>
-          </div>
-        </section> */}
-        <section className="flex flex-col w-full my-2">
-          <div className="px-4 py-4 bg-slate-100 h-68 rounded-xl flex-col justify-items-center">
-            <QRCodeSVG value={address} className="flex self-center mx-auto w-44 h-44" />
-            <button
-              onClick={addressToClipboard}
-              className="bg-white hover:bg-slate-200 text-black font-bold py-2 px-4 h-14 max-w-72 w-72 rounded-lg mt-4">
-              <div className="flex">
-                <Image src="/img/copy.svg" alt="info" width={24} height={24} />
-                <div className="flex flex-col mx-2">
-                  <div className="text-left text-base font-semibold">Your address</div>
-                  <span id="address" className="max-w-40 w-40 text-left address text-sm text-[#4F6486]">
-                    {format(address)}
-                  </span>
+
+        {address ? (
+          <>
+            <section className="grid grid-cols-2 gap-4 text-left mb-6">
+              <div>
+                <div className="text-sm font-semibold text-gray-500">Condition</div>
+                <div className="flex items-center bg-gray-100 rounded-lg py-1 px-3 mt-1 w-fit">
+                  <span className="text-gray-800 text-sm">New</span>
+                  <Image src="/img/new.svg" alt="new" width={12} height={12} className="ml-2" />
                 </div>
               </div>
-            </button>
-          </div>
-        </section>
-
-        <section className="history h-14 w-full">
-          {/* <button
-            onClick={() => window.open('https://apps.apple.com/us/app/coinplus-wallet/id6466606575?uo=2')}
-            className="bg-blueGray hover:bg-slate-200 text-black font-bold py-1 px-4 h-14 w-full rounded-lg mt-4">
-            <div className="flex justify-between">
-              <Image src="/img/history.svg" alt="History" width={24} height={24} />
-              <div className="flex flex-col mx-2">
-                <div className="text-left text-base font-medium">History</div>
-                <span id="address" className="address font-normal text-sm text-[#4F6486]">
-                  Check the list of your transactions
-                </span>
+              <div>
+                <div className="text-sm font-semibold text-gray-500">Balance</div>
+                <div className="px-3 py-1 bg-gray-100 font-normal rounded-lg mt-1 w-fit min-h-[28px]">
+                  <span className="font-bold text-gray-800">{balance || '...'}</span>
+                  <span className="text-gray-600 ml-1 text-sm">{cl?.toUpperCase()}</span>
+                </div>
               </div>
-              <Image src="/img/arrowright.svg" alt="Open history" width={24} height={24} />
-            </div>
-          </button> */}
-          <section className="flex flex-col my-7">
-            <div className="font-bold text-sm text-left mb-3">Download Coinplus app</div>
-            <div className="flex w-56 justify-between">
-              <a
-                className="flex items-center justify-center"
-                href="https://apps.apple.com/us/app/coinplus-wallet/id6466606575?uo=2"
-                target="_blank"
-                rel="noopener noreferrer">
-                <Image src="/img/appstore.svg" alt="App Store" width={100} height={28.9} />
-              </a>
-              <a
-                className="flex items-center justify-center"
-                href="https://play.google.com/store/apps/details?id=com.coinplus.app"
-                target="_blank"
-                rel="noopener noreferrer">
-                <Image src="/img/googleplay.svg" alt="Google Play" width={100} height={28.9} />
-              </a>
-            </div>
-          </section>
-          <section className="flex flex-col mt-7 mb-2">
-            <div className="font-bold text-sm text-left mb-3">Join community</div>
-            <div className="flex w-64 justify-left">
-              <a
-                className="flex items-center bg-blueGray hover:bg-slate-200 justify-center w-8 h-8 rounded-full"
-                href="https://x.com/coinplus"
-                target="_blank"
-                rel="noopener noreferrer">
-                <Image src="/img/x.svg" alt="twitter" width={17} height={17} />
-              </a>
-              <a
-                className="flex items-center bg-blueGray hover:bg-slate-200 justify-center w-8 h-8 rounded-full"
-                href="https://www.facebook.com/coin.plus/"
-                target="_blank"
-                rel="noopener noreferrer">
-                <Image src="/img/fb.svg" alt="facebook" width={17} height={17} />
-              </a>
-              {/* <a
-                className="flex items-center bg-blueGray hover:bg-slate-200 justify-center w-8 h-8 rounded-full"
-                href="https://coinplus.com"
-                target="_blank"
-                rel="noopener noreferrer">
-                <Image src="/img/reddit.svg" alt="App Store" width={17} height={17} />
-              </a> */}
-              {/* <a
-                className="flex items-center bg-blueGray hover:bg-slate-200 justify-center w-8 h-8 rounded-full"
-                href="https://coinplus.com"
-                target="_blank"
-                rel="noopener noreferrer">
-                <Image src="/img/greenstar.svg" alt="Google Play" width={17} height={17} />
-              </a> */}
-            </div>
-          </section>
-        </section>
+            </section>
+
+            <section className="my-6">
+              <div className="bg-gray-50 rounded-lg p-4 flex justify-center">
+                <QRCodeSVG value={address} size={192} bgColor="#f9fafb" fgColor="#1f2937" />
+              </div>
+            </section>
+
+            <section>
+              <label htmlFor="address-display" className="block text-left text-sm font-semibold text-gray-500 mb-1">
+                Your address
+              </label>
+              <div className="relative flex items-center">
+                <input
+                  id="address-display"
+                  readOnly
+                  value={address}
+                  className="w-full bg-gray-100 rounded-lg p-3 pr-12 font-mono text-sm text-gray-700 border-transparent focus:border-orange-500 focus:ring-0"
+                />
+                <button
+                  onClick={addressToClipboard}
+                  className="absolute right-0 h-full px-4 flex items-center justify-center text-gray-500 hover:text-gray-800 transition-colors"
+                  aria-label="Copy address">
+                  <Image src="/img/copy.svg" alt="copy" width={20} height={20} />
+                </button>
+              </div>
+            </section>
+          </>
+        ) : (
+          <div className="text-center py-10">
+            <p className="text-gray-500">Loading address data...</p>
+          </div>
+        )}
       </main>
+
+      <footer className="w-full max-w-md mt-8 text-center">
+        <div className="mb-6">
+          <div className="font-bold text-sm text-gray-600 mb-4">Download Coinplus app</div>
+          <div className="flex justify-center space-x-4">
+            <a
+              href="https://apps.apple.com/us/app/coinplus-wallet/id6466606575?uo=2"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="transform hover:scale-105 transition-transform">
+              <Image src="/img/appstore.svg" alt="App Store" width={120} height={40} />
+            </a>
+            <a
+              href="https://play.google.com/store/apps/details?id=com.coinplus.app"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="transform hover:scale-105 transition-transform">
+              <Image src="/img/googleplay.svg" alt="Google Play" width={120} height={40} />
+            </a>
+          </div>
+        </div>
+        <div>
+          <div className="font-bold text-sm text-gray-600 mb-3">Join our community</div>
+          <div className="flex justify-center space-x-3">
+            <a
+              href="https://x.com/coinplus"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-gray-200 hover:bg-gray-300 rounded-full p-3 transition-colors transform hover:scale-110">
+              <Image src="/img/x.svg" alt="X (Twitter)" width={18} height={18} />
+            </a>
+            <a
+              href="https://www.facebook.com/coin.plus/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-gray-200 hover:bg-gray-300 rounded-full p-3 transition-colors transform hover:scale-110">
+              <Image src="/img/fb.svg" alt="Facebook" width={18} height={18} />
+            </a>
+            {/* <a
+              className="flex items-center bg-blueGray hover:bg-slate-200 justify-center w-8 h-8 rounded-full"
+              href="https://coinplus.com"
+              target="_blank"
+              rel="noopener noreferrer">
+              <Image src="/img/reddit.svg" alt="App Store" width={17} height={17} />
+            </a> */}
+            {/* <a
+              className="flex items-center bg-blueGray hover:bg-slate-200 justify-center w-8 h-8 rounded-full"
+              href="https://coinplus.com"
+              target="_blank"
+              rel="noopener noreferrer">
+              <Image src="/img/greenstar.svg" alt="Google Play" width={17} height={17} />
+            </a> */}
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };
