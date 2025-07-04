@@ -137,8 +137,12 @@ const Air: NextPage = () => {
       <main className="bg-white rounded-2xl shadow-lg p-6 sm:p-8 w-full max-w-md mt-8 sm:mt-0">
         <section className="text-center border-b pb-4 mb-6">
           <h1 className="font-bold text-2xl text-gray-800 flex items-center justify-center gap-2">
-            <a href="https://coinplus.com" target="_blank" rel="noopener noreferrer">
-              <Image src="/img/logo.svg" alt="Coinplus Logo" width={100} height={39} />
+            <a
+              href="https://coinplus.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="relative w-[100px] h-[39px]">
+              <Image src="/img/logo.svg" alt="Coinplus Logo" fill className="object-contain" />
             </a>
             <span>QuickCheck</span>
           </h1>
