@@ -126,7 +126,7 @@ const Air: NextPage = () => {
   }, [address, balance, getBalance]);
 
   return (
-    <div className="bg-gray-50 min-h-screen flex flex-col items-center justify-center p-4 selection:bg-[#FB6D40] selection:text-white">
+    <div className="bg-gray-50 min-h-screen flex flex-col items-center justify-between p-4 selection:bg-[#FB6D40] selection:text-white">
       <Head>
         <title>Air - Coinplus</title>
         <meta name="description" content="Coinplus QuickCheck for your crypto address." />
@@ -195,7 +195,7 @@ const Air: NextPage = () => {
         )}
       </main>
 
-      <footer className="w-full max-w-md mt-8 text-center">
+      <footer className="w-full max-w-md text-center">
         <div className="mb-6">
           <div className="font-bold text-sm text-gray-600 mb-4">Download Coinplus app</div>
           <div className="flex justify-center space-x-4">
