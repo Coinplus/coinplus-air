@@ -199,7 +199,7 @@ const Air: NextPage = () => {
 
       <footer className="w-full max-w-md text-center mx-auto pb-4">
         <div className="mb-6">
-          <div className="font-bold text-sm text-gray-600 mb-4">Download Coinplus app</div>
+          <div className="font-bold text-sm text-gray-600 mt-4 mb-4">Download Coinplus app</div>
           <div className="flex justify-center space-x-4">
             <a
               href="https://apps.apple.com/us/app/coinplus-wallet/id6466606575?uo=2"
