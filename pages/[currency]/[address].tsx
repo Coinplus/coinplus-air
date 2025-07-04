@@ -126,7 +126,7 @@ const Air: NextPage = () => {
   }, [address, balance, getBalance]);
 
   return (
-    <div className="bg-gray-50 min-h-screen flex flex-col p-4 selection:bg-[#FB6D40] selection:text-white">
+    <div className="bg-gray-50 min-h-screen flex flex-col items-center sm:justify-center p-4 selection:bg-[#FB6D40] selection:text-white">
       <Head>
         <title>Air - Coinplus</title>
         <meta name="description" content="Coinplus QuickCheck for your crypto address." />
@@ -134,72 +134,70 @@ const Air: NextPage = () => {
       </Head>
       <ToastContainer />
 
-      <div className="flex w-full flex-grow items-start justify-center sm:items-center">
-        <main className="bg-white rounded-2xl shadow-lg p-6 sm:p-8 w-full max-w-md">
-          <section className="text-center border-b pb-4 mb-6">
-            <h1 className="font-bold text-2xl text-gray-800 flex items-center justify-center gap-2">
-              <a href="https://coinplus.com" target="_blank" rel="noopener noreferrer">
-                <Image src="/img/logo.svg" alt="Coinplus Logo" width={100} height={39} />
-              </a>
-              <span>QuickCheck</span>
-            </h1>
-          </section>
+      <main className="bg-white rounded-2xl shadow-lg p-6 sm:p-8 w-full max-w-md mt-8 sm:mt-0">
+        <section className="text-center border-b pb-4 mb-6">
+          <h1 className="font-bold text-2xl text-gray-800 flex items-center justify-center gap-2">
+            <a href="https://coinplus.com" target="_blank" rel="noopener noreferrer">
+              <Image src="/img/logo.svg" alt="Coinplus Logo" width={100} height={39} />
+            </a>
+            <span>QuickCheck</span>
+          </h1>
+        </section>
 
-          {address ? (
-            <>
-              <section className="grid grid-cols-2 gap-4 text-left mb-6">
-                {/* <div>
-                  <div className="text-sm font-semibold text-gray-500">Condition</div>
-                  <div className="flex items-center bg-gray-100 rounded-lg py-1 px-3 mt-1 w-fit">
-                    <span className="text-gray-800 text-sm">New</span>
-                    <Image src="/img/new.svg" alt="new" width={12} height={12} className="ml-2" />
-                  </div>
-                </div> */}
-                <div>
-                  <div className="text-sm font-semibold text-gray-500">Balance</div>
-                  <div className="px-3 py-1 bg-gray-100 font-normal rounded-lg mt-1 w-fit min-h-[28px]">
-                    <span className="font-bold text-gray-800">{balance || '...'}</span>
-                    <span className="text-gray-600 ml-1 text-sm">{cl?.toUpperCase()}</span>
-                  </div>
+        {address ? (
+          <>
+            <section className="grid grid-cols-2 gap-4 text-left mb-6">
+              {/* <div>
+                <div className="text-sm font-semibold text-gray-500">Condition</div>
+                <div className="flex items-center bg-gray-100 rounded-lg py-1 px-3 mt-1 w-fit">
+                  <span className="text-gray-800 text-sm">New</span>
+                  <Image src="/img/new.svg" alt="new" width={12} height={12} className="ml-2" />
                 </div>
-              </section>
-
-              <section className="my-6">
-                <div className="bg-gray-50 rounded-lg p-4 flex justify-center">
-                  <QRCodeSVG value={address} size={192} bgColor="#f9fafb" fgColor="#1f2937" />
+              </div> */}
+              <div>
+                <div className="text-sm font-semibold text-gray-500">Balance</div>
+                <div className="px-3 py-1 bg-gray-100 font-normal rounded-lg mt-1 w-fit min-h-[28px]">
+                  <span className="font-bold text-gray-800">{balance || '...'}</span>
+                  <span className="text-gray-600 ml-1 text-sm">{cl?.toUpperCase()}</span>
                 </div>
-              </section>
+              </div>
+            </section>
 
-              <section>
-                <label htmlFor="address-display" className="block text-left text-sm font-semibold text-gray-500 mb-1">
-                  Your address
-                </label>
-                <div onClick={addressToClipboard} className="relative flex items-center cursor-pointer group">
-                  <input
-                    id="address-display"
-                    readOnly
-                    value={address}
-                    className="w-full bg-gray-100 rounded-lg p-3 pr-12 font-mono text-sm text-gray-700 border-transparent focus:border-orange-500 focus:ring-0 pointer-events-none"
-                  />
-                  <div
-                    className="absolute right-0 h-full px-4 flex items-center justify-center text-gray-500 group-hover:text-gray-800 transition-colors"
-                    aria-label="Copy address">
-                    <Image src="/img/copy.svg" alt="copy" width={20} height={20} />
-                  </div>
+            <section className="my-6">
+              <div className="bg-gray-50 rounded-lg p-4 flex justify-center">
+                <QRCodeSVG value={address} size={192} bgColor="#f9fafb" fgColor="#1f2937" />
+              </div>
+            </section>
+
+            <section>
+              <label htmlFor="address-display" className="block text-left text-sm font-semibold text-gray-500 mb-1">
+                Your address
+              </label>
+              <div onClick={addressToClipboard} className="relative flex items-center cursor-pointer group">
+                <input
+                  id="address-display"
+                  readOnly
+                  value={address}
+                  className="w-full bg-gray-100 rounded-lg p-3 pr-12 font-mono text-sm text-gray-700 border-transparent focus:border-orange-500 focus:ring-0 pointer-events-none"
+                />
+                <div
+                  className="absolute right-0 h-full px-4 flex items-center justify-center text-gray-500 group-hover:text-gray-800 transition-colors"
+                  aria-label="Copy address">
+                  <Image src="/img/copy.svg" alt="copy" width={20} height={20} />
                 </div>
-              </section>
-            </>
-          ) : (
-            <div className="text-center py-10">
-              <p className="text-gray-500">Loading address data...</p>
-            </div>
-          )}
-        </main>
-      </div>
+              </div>
+            </section>
+          </>
+        ) : (
+          <div className="text-center py-10">
+            <p className="text-gray-500">Loading address data...</p>
+          </div>
+        )}
+      </main>
 
-      <footer className="w-full max-w-md text-center mx-auto pb-4">
+      <footer className="w-full max-w-md text-center mx-auto mt-8 pb-4">
         <div className="mb-6">
-          <div className="font-bold text-sm text-gray-600 mt-4 mb-4">Download Coinplus app</div>
+          <div className="font-bold text-sm text-gray-600 mb-4">Download Coinplus app</div>
           <div className="flex justify-center space-x-4">
             <a
               href="https://apps.apple.com/us/app/coinplus-wallet/id6466606575?uo=2"
