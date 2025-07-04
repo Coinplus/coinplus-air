@@ -135,8 +135,8 @@ const Air: NextPage = () => {
       <ToastContainer />
 
       <main className="bg-white rounded-2xl shadow-lg p-6 sm:p-8 w-full max-w-md mt-8 sm:mt-0">
-        <section className="text-center border-b pb-4 mb-6">
-          <h1 className="font-bold text-2xl text-gray-800 flex items-center justify-center gap-2">
+        <section className="border-b pb-4 mb-6">
+          <h1 className="font-bold text-2xl text-gray-800 flex items-center justify-between">
             <a
               href="https://coinplus.com"
               target="_blank"
@@ -145,6 +145,7 @@ const Air: NextPage = () => {
               <Image src="/img/logo.svg" alt="Coinplus Logo" fill className="object-contain" />
             </a>
             <span>QuickCheck</span>
+            <div className="w-[100px]" />
           </h1>
         </section>
 
@@ -235,6 +236,13 @@ const Air: NextPage = () => {
               rel="noopener noreferrer"
               className="bg-gray-200 hover:bg-gray-300 rounded-full p-3 transition-colors transform hover:scale-110">
               <Image src="/img/fb.svg" alt="Facebook" width={18} height={18} />
+            </a>
+            <a
+              href="https://www.linkedin.com/company/coinplus"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-gray-200 hover:bg-gray-300 rounded-full p-3 transition-colors transform hover:scale-110">
+              <Image src="/img/in.svg" alt="LinkedIn" width={18} height={18} />
             </a>
             {/* <a
               className="flex items-center bg-blueGray hover:bg-slate-200 justify-center w-8 h-8 rounded-full"
