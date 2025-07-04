@@ -134,15 +134,14 @@ const Air: NextPage = () => {
       </Head>
       <ToastContainer />
 
-      <header className="mb-6 text-center">
-        <a href="https://coinplus.com" target="_blank" rel="noopener noreferrer">
-          <Image src="/img/logo.svg" alt="Coinplus Logo" width={118} height={46} />
-        </a>
-      </header>
-
       <main className="bg-white rounded-2xl shadow-lg p-6 sm:p-8 w-full max-w-md">
         <section className="text-center border-b pb-4 mb-6">
-          <h1 className="font-bold text-2xl text-gray-800">Coinplus QuickCheck</h1>
+          <h1 className="font-bold text-2xl text-gray-800 flex items-center justify-center gap-2">
+            <a href="https://coinplus.com" target="_blank" rel="noopener noreferrer">
+              <Image src="/img/logo.svg" alt="Coinplus Logo" width={100} height={39} />
+            </a>
+            <span>QuickCheck</span>
+          </h1>
         </section>
 
         {address ? (
