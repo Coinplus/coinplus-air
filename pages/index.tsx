@@ -108,6 +108,13 @@ const Home: NextPage = () => {
               className="bg-gray-200 hover:bg-gray-300 rounded-full p-3 transition-colors transform hover:scale-110">
               <Image src="/img/in.svg" alt="LinkedIn" width={18} height={18} />
             </a>
+            <a
+              href="https://www.instagram.com/coinplus.inc/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-gray-200 hover:bg-gray-300 rounded-full p-3 transition-colors transform hover:scale-110">
+              <Image src="/img/instagram.svg" alt="Instagram" width={18} height={18} />
+            </a>
           </div>
         </div>
       </footer>

@@ -242,6 +242,13 @@ const Air: NextPage = () => {
               className="bg-gray-200 hover:bg-gray-300 rounded-full p-3 transition-colors transform hover:scale-110">
               <Image src="/img/in.svg" alt="LinkedIn" width={18} height={18} />
             </a>
+            <a
+              href="https://www.instagram.com/coinplus.inc/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-gray-200 hover:bg-gray-300 rounded-full p-3 transition-colors transform hover:scale-110">
+              <Image src="/img/instagram.svg" alt="Instagram" width={18} height={18} />
+            </a>
             {/* <a
               className="flex items-center bg-blueGray hover:bg-slate-200 justify-center w-8 h-8 rounded-full"
               href="https://coinplus.com"
