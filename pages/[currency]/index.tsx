@@ -1,4 +1,5 @@
 import type { NextPage } from 'next';
+import type { GetServerSidePropsContext } from 'next';
 
 const Currency: NextPage = () => {
   return (
@@ -10,7 +11,7 @@ const Currency: NextPage = () => {
 
 export default Currency;
 
-export async function getServerSideProps(context: any) {
+export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { currency } = context.query;
 
   // temporary hack to fix the issue if the address is provided instead of currency
